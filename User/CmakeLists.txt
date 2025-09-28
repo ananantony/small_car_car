@@ -16,4 +16,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Driver
     ${CMAKE_CURRENT_SOURCE_DIR}/App
     ${CMAKE_CURRENT_SOURCE_DIR}/Utils
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Driver/motor_ctrl
+    ${CMAKE_CURRENT_SOURCE_DIR}/Driver/led
 )
