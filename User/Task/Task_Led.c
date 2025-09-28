@@ -1,9 +1,9 @@
 /*
- * @File         : \User\Driver\led\led.c
- * @Author       : mengmld@qq.com
- * @Date         : 2025-09-13 12:26:21
+ * @File         : \User\Task\Task_Led.c
+ * @Author       : menglingda@govyair.com
+ * @Date         : 2025-09-28 16:50:16
  * @LastEditors  : menglingda@govyair.com
- * @LastEditTime : 2025-09-28 17:09:00
+ * @LastEditTime : 2025-09-28 17:40:29
  * @Description  :
  *
  * Copyright (c) 2025 by tony.meng, All Rights Reserved.
@@ -16,21 +16,22 @@
  *  |            |         |             |                                    |
  *  |-------------------------------------------------------------------------|
  */
-#include "led.h"
 
-/**
- * @description: 板载led控制，对应端口低电平点亮
- * @param on_off LED_ON/LED_OFF
- * @return
- */
-void Led_Ctrl(uint8_t on_off)
+#include "Task_Entry.h"
+#include "Led.h"
+void Task_Safety_Entry(void *argument)
 {
-    if (LED_ON == on_off)
+    const uint32_t period_ticks   = Ms_To_Os_Tick(TASK_LED_PERIOD_MS); // 10 ms
+    uint32_t       next_wake_tick = osKernelGetTickCount();
+    for (;;)
     {
-        HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_RESET);
+        next_wake_tick += period_ticks;
+
+        // 阻塞直到下一个周期
+        if (osDelayUntil(next_wake_tick) != osOK)
+        {
+            // 错误处理：周期过长或者被误调用
+        }
     }
-    else
-    {
-        HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_SET);
-    }
+    /* USER CODE END Task_Safety_Entry */
 }

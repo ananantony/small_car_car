@@ -1,9 +1,9 @@
 /*
- * @File         : \User\Driver\led\led.c
- * @Author       : mengmld@qq.com
- * @Date         : 2025-09-13 12:26:21
+ * @File         : \User\Utils\common_utils.h
+ * @Author       : menglingda@govyair.com
+ * @Date         : 2025-09-28 17:35:22
  * @LastEditors  : menglingda@govyair.com
- * @LastEditTime : 2025-09-28 17:09:00
+ * @LastEditTime : 2025-09-28 17:35:26
  * @Description  :
  *
  * Copyright (c) 2025 by tony.meng, All Rights Reserved.
@@ -16,21 +16,12 @@
  *  |            |         |             |                                    |
  *  |-------------------------------------------------------------------------|
  */
-#include "led.h"
+#ifndef __COMMON_UTILS_H__
+#define __COMMON_UTILS_H__
 
-/**
- * @description: 板载led控制，对应端口低电平点亮
- * @param on_off LED_ON/LED_OFF
- * @return
- */
-void Led_Ctrl(uint8_t on_off)
-{
-    if (LED_ON == on_off)
-    {
-        HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_RESET);
-    }
-    else
-    {
-        HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_SET);
-    }
-}
+#include "cmsis_os.h"
+#include "stm32h7xx_hal.h"
+
+void Ms_To_Os_Tick(uint32_t ms);
+
+#endif /* __COMMON_UTILS_H__ */
