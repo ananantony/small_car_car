@@ -138,6 +138,8 @@
     "files.associations": {
         "task_entry.h": "c",
         "common_utils.h": "c",
-        "common_define.h": "c"
+        "common_define.h": "c",
+        "string.h": "c",
+        "log.h": "c"
     }
 }

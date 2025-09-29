@@ -1,9 +1,9 @@
 /*
- * @File         : \User\Task\Task_Led.c
- * @Author       : menglingda@govyair.com
- * @Date         : 2025-09-28 16:50:16
+ * @File         : \User\Cdd\cdd_uart.c
+ * @Author       : tony.meng
+ * @Date         : 2025-09-29 15:43:18
  * @LastEditors  : mengmld@qq.com
- * @LastEditTime : 2025-09-29 15:10:01
+ * @LastEditTime : 2025-09-29 17:15:16
  * @Description  :
  *
  * Copyright (c) 2025 by tony.meng, All Rights Reserved.
@@ -16,21 +16,36 @@
  *  |            |         |             |                                    |
  *  |-------------------------------------------------------------------------|
  */
+#include "cdd_uart.h"
 
-#include "Task_Entry.h"
-#include "Led.h"
-void Task_Led_Entry(void *argument)
-{
-    const uint32_t period_ticks   = Ms_To_Os_Tick(TASK_LED_PERIOD_MS); // 10 ms
-    uint32_t       next_wake_tick = osKernelGetTickCount();
-    for (;;)
+UartConfig uart_config[] = {
     {
-        next_wake_tick += period_ticks;
+     .channel = UART_CHANNEL_LOG,
+     .huart   = &huart1,
+     .is_init = 0,
+     .tx_busy = 0,
+     .rx_busy = 0,
 
-        // 阻塞直到下一个周期
-        if (osDelayUntil(next_wake_tick) != osOK)
-        {
-            // 错误处理：周期过长或者被误调用
-        }
+     },
+
+    {
+     .channel = UART_CHANNEL_CMD,
+     .huart   = &huart2,
+     .is_init = 0,
+     .tx_busy = 0,
+     .rx_busy = 0,
+     }
+};
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART1)
+    {
+        uart_config[UART_CHANNEL_LOG].tx_busy = 0;
     }
+}
+
+UartConfig *UartGetConfig(UartChannel channel)
+{
+    return &uart_config[channel];
 }
