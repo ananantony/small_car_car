@@ -1,9 +1,9 @@
 /*
- * @File         : \User\Cdd\Log\log.h
+ * @File         : \User\Service\log.h
  * @Author       : tony.meng
  * @Date         : 2025-09-29 15:15:52
  * @LastEditors  : mengmld@qq.com
- * @LastEditTime : 2025-09-29 15:21:08
+ * @LastEditTime : 2025-09-30 15:04:23
  * @Description  :
  *
  * Copyright (c) 2025 by tony.meng, All Rights Reserved.
@@ -35,13 +35,13 @@ typedef enum
     LOG_LEVEL_ERROR
 } LogLevel;
 
-void Log_Init(void);
-void Log_Task(void *argument);
-void Log_Printf(const char *func, int line, const char *fmt, ...);
+void LogInit(void);
+void LogPrintf(LogLevel level, const char *func, int line, const char *fmt, ...);
+void LogServiceMainFunc(void);
 
-#define LOGD(fmt, ...) Log_Printf(__FUNCTION__, __LINE__, "[DEBUG] " fmt, ##__VA_ARGS__)
-#define LOGI(fmt, ...) Log_Printf(__FUNCTION__, __LINE__, "[INFO] " fmt, ##__VA_ARGS__)
-#define LOGW(fmt, ...) Log_Printf(__FUNCTION__, __LINE__, "[WARN] " fmt, ##__VA_ARGS__)
-#define LOGE(fmt, ...) Log_Printf(__FUNCTION__, __LINE__, "[ERROR] " fmt, ##__VA_ARGS__)
+#define LOG_DEBUG(fmt, ...) LogPrintf(LOG_LEVEL_DEBUG, __FUNCTION__, __LINE__, "[DEBUG] " fmt, ##__VA_ARGS__)
+#define LOG_INFO(fmt, ...)  LogPrintf(LOG_LEVEL_INFO, __FUNCTION__, __LINE__, "[INFO] " fmt, ##__VA_ARGS__)
+#define LOG_WARN(fmt, ...)  LogPrintf(LOG_LEVEL_WARN, __FUNCTION__, __LINE__, "[WARN] " fmt, ##__VA_ARGS__)
+#define LOG_ERROR(fmt, ...) LogPrintf(LOG_LEVEL_ERROR, __FUNCTION__, __LINE__, "[ERROR] " fmt, ##__VA_ARGS__)
 
 #endif /* __LOG_H__ */

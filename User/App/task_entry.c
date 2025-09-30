@@ -1,9 +1,9 @@
 /*
- * @File         : \User\Task\Task_Led.c
+ * @File         : \User\App\Task_Entry.c
  * @Author       : menglingda@govyair.com
- * @Date         : 2025-09-28 16:50:16
+ * @Date         : 2025-09-28 17:17:35
  * @LastEditors  : mengmld@qq.com
- * @LastEditTime : 2025-09-29 15:10:01
+ * @LastEditTime : 2025-09-30 15:23:56
  * @Description  :
  *
  * Copyright (c) 2025 by tony.meng, All Rights Reserved.
@@ -16,21 +16,26 @@
  *  |            |         |             |                                    |
  *  |-------------------------------------------------------------------------|
  */
+#include "task_entry.h"
 
-#include "Task_Entry.h"
-#include "Led.h"
-void Task_Led_Entry(void *argument)
+#include "gpio.h"
+#include "usart.h"
+#include "tim.h"
+#include "freertos.h"
+
+void TaskEntry(void)
 {
-    const uint32_t period_ticks   = Ms_To_Os_Tick(TASK_LED_PERIOD_MS); // 10 ms
-    uint32_t       next_wake_tick = osKernelGetTickCount();
-    for (;;)
-    {
-        next_wake_tick += period_ticks;
-
-        // 阻塞直到下一个周期
-        if (osDelayUntil(next_wake_tick) != osOK)
-        {
-            // 错误处理：周期过长或者被误调用
-        }
-    }
+    // 驱动初始化
+    MX_GPIO_Init();
+    MX_USART1_UART_Init();
+    MX_TIM2_Init();
+    MX_TIM1_Init();
+    MX_TIM5_Init();
+    MX_TIM23_Init();
+    MX_TIM24_Init();
+    MX_USART2_UART_Init();
+    // 初始化FreeRTOS
+    osKernelInitialize();
+    MX_FREERTOS_Init();
+    osKernelStart();
 }

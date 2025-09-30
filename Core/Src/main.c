@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "led.h"
+#include "task_entry.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,6 +90,8 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
+
+  TaskEntry();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */

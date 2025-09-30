@@ -3,7 +3,7 @@
  * @Author       : tony.meng
  * @Date         : 2025-09-29 15:43:32
  * @LastEditors  : mengmld@qq.com
- * @LastEditTime : 2025-09-29 17:14:09
+ * @LastEditTime : 2025-09-30 14:02:46
  * @Description  :
  *
  * Copyright (c) 2025 by tony.meng, All Rights Reserved.
@@ -25,14 +25,6 @@
 
 #include "usart.h"
 
-typedef struct
-{
-    UART_HandleTypeDef huart;
-    uint8_t           *buffer;
-    uint16_t           buffer_size;
-    uint16_t           buffer_index;
-} CddUart;
-
 typedef enum
 {
     UART_CHANNEL_LOG,
@@ -46,6 +38,10 @@ typedef struct
     uint8_t             is_init;
     uint8_t             tx_busy;
     uint8_t             rx_busy;
+    uint32_t            tx_lost_count;
+    uint32_t            rx_lost_count;
 } UartConfig;
+
+UartConfig *UartGetConfig(UartChannel channel);
 
 #endif /* __CDD_UART_H__ */

@@ -140,6 +140,8 @@
         "common_utils.h": "c",
         "common_define.h": "c",
         "string.h": "c",
-        "log.h": "c"
+        "log.h": "c",
+        "cmsis_os2.h": "c",
+        "main.h": "c"
     }
 }
